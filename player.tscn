@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://cpu3jwmmxsmx1"]
+
+[ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="1_gi0b6"]
+[ext_resource type="Script" path="res://player.gd" id="1_oj8ie"]
+[ext_resource type="Script" path="res://SpringArm3D.gd" id="3_tu6u6"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y3g87"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_whd2u"]
+material = ExtResource("1_gi0b6")
+
+[sub_resource type="BoxMesh" id="BoxMesh_vfbkk"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, 1, 0)
+script = ExtResource("1_oj8ie")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_y3g87")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_whd2u")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+spring_length = 7.0
+margin = 0.2
+script = ExtResource("3_tu6u6")
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+current = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.148815, 0, 0, 0, 0.0308877, 0.156121, 0, -0.785794, 0.00613674, 0, 0.629367, 0.651646)
+mesh = SubResource("BoxMesh_vfbkk")
