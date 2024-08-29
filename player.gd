@@ -36,6 +36,7 @@ var _snap_vector:= Vector3.DOWN
 
 func _physics_process(delta: float) -> void:
 	var move_direction := Vector3.ZERO
+
 	move_direction.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 	move_direction.z = Input.get_action_strength("back") - Input.get_action_strength("forward")
 	move_direction = move_direction.rotated(Vector3.UP, spring_arm_3d.rotation.y).normalized()
@@ -51,7 +52,7 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_strength	
-		
+
 	var look_direction = Vector2(velocity.z, velocity.x)
 	if look_direction.length() > 0.2:
 		rotation.y = look_direction.angle()

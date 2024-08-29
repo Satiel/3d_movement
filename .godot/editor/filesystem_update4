@@ -1,8 +1,8 @@
 res://World.tscn
 res://materials/grid.tres
 res://materials/player.tres
-res://SpringArm3D.gd
 res://player.tscn
 res://skeleton_warrior.tscn
 res://box.tscn
 res://player.gd
+res://SpringArm3D.gd

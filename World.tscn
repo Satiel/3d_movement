@@ -128,9 +128,6 @@ shape = SubResource("ConcavePolygonShape3D_plmea")
 [node name="Box" parent="Enemies" groups=["Enemies"] instance=ExtResource("5_n3ly4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.11318, 0.740492, -4.00735)
 
-[node name="Box2" parent="Enemies" groups=["Enemies"] instance=ExtResource("5_n3ly4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.596673, 0.740492, -4.32393)
-
 [node name="Allies" type="Node3D" parent="."]
 
 [node name="Box3" parent="Allies" groups=["Allies"] instance=ExtResource("5_n3ly4")]
@@ -139,10 +136,10 @@ mesh = SubResource("BoxMesh_rgy4o")
 skeleton = NodePath("../../Enemies")
 
 [node name="Player" parent="." instance=ExtResource("3_ldapy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.65204, 1.2876, 8.64324)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.652, 1.2876, 32.6432)
 
 [node name="Area3D" type="Area3D" parent="Player"]
-transform = Transform3D(2.925, 0, 0, 0, 2.925, 0, 0, 0, 2.925, 0, 0, 0)
+transform = Transform3D(12.18, 0, 0, 0, 12.18, 0, 0, 0, 12.18, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Area3D"]
 transform = Transform3D(6.03, 0, 0, 0, 6.03, 0, 0, 0, 6.03, 0, 0, 0)

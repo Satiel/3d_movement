@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dc08vcyt1usbf"]
+[gd_scene load_steps=8 format=3 uid="uid://dc08vcyt1usbf"]
 
 [ext_resource type="Texture2D" uid="uid://ivvpsi314b34" path="res://textures/grid.jpg" id="1_r8x6b"]
 
@@ -60,10 +60,10 @@ void fragment() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t8k35"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ga4sg"]
 render_priority = 0
 shader = SubResource("Shader_cwof1")
-shader_parameter/albedo = Color(0.76787, 0.184871, 0.761091, 1)
+shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/point_size = 1.0
 shader_parameter/roughness = 0.5
 shader_parameter/metallic_texture_channel = null
@@ -78,10 +78,16 @@ shader_parameter/texture_albedo = ExtResource("1_r8x6b")
 shader_parameter/texture_roughness = ExtResource("1_r8x6b")
 
 [sub_resource type="BoxMesh" id="BoxMesh_qnfs5"]
-material = SubResource("ShaderMaterial_t8k35")
+material = SubResource("ShaderMaterial_ga4sg")
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_4ilhk"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nuj1a"]
+albedo_color = Color(0.842705, 0, 0.196693, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_vo25j"]
+material = SubResource("StandardMaterial3D_nuj1a")
 
 [node name="Box" type="MeshInstance3D"]
 mesh = SubResource("BoxMesh_qnfs5")
@@ -90,3 +96,8 @@ mesh = SubResource("BoxMesh_qnfs5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_4ilhk")
+
+[node name="_target_lock" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.055, 0, 0, 0, 1.055, 0, 0, 0, 1.055, 0, -0.00395393, 0)
+visible = false
+mesh = SubResource("SphereMesh_vo25j")
