@@ -37,21 +37,42 @@ var _snap_vector:= Vector3.DOWN
 #@onready var enemies_in_range_label = $"../Enemies_in_range_label"
 @onready var enemies_in_range_label = $"/root/World/Enemies_in_range_label"
 
-
+var strafe_dir = Vector3.ZERO
+var strafe = Vector3.ZERO
 
 
 
 
 func _physics_process(delta: float) -> void:
 	var move_direction := Vector3.ZERO
+	
+	if Input.is_action_pressed("aim"):
+		$AnimationTree.set("parameters/aim_transition/transition_request", "aiming")
+	else:
+		$AnimationTree.set("parameters/aim_transition/transition_request", "not_aiming")
 
-	move_direction.x = Input.get_action_strength("right") - Input.get_action_strength("left")
-	move_direction.z = Input.get_action_strength("back") - Input.get_action_strength("forward")
-	move_direction = move_direction.rotated(Vector3.UP, spring_arm_3d.rotation.y).normalized()
+	if Input.is_action_pressed("right") || Input.is_action_pressed("left") || Input.is_action_pressed("forward") || Input.is_action_pressed("back"):
+		move_direction.x = Input.get_action_strength("right") - Input.get_action_strength("left")
+		move_direction.z = Input.get_action_strength("back") - Input.get_action_strength("forward")
+		#move_direction = move_direction.rotated(Vector3.UP, spring_arm_3d.rotation.y).normalized() #THIS IS OLD WAY, BEFORE ANIMATIONTREE
+			
+		# animationtree stuff
+		strafe_dir = move_direction
+		move_direction = move_direction.rotated(Vector3.UP, spring_arm_3d.rotation.y).normalized()
+			
+		if Input.is_action_pressed("sprint") && $AnimationTree.get("parameters/aim_transition/current_state") == "not_aiming":
+			$AnimationTree.set("parameters/Iwr_blend/blend_amount", lerp($AnimationTree.get("parameters/Iwr_blend/blend_amount"), 1.0, delta * 0.8))
+		else: 
+			$AnimationTree.set("parameters/Iwr_blend/blend_amount", lerp($AnimationTree.get("parameters/Iwr_blend/blend_amount"), 0.0, delta * 0.8))
+		
+
+	#velocity.y -= gravity * delta
+	else:
+		$AnimationTree.set("parameters/Iwr_blend/blend_amount", lerp($AnimationTree.get("parameters/Iwr_blend/blend_amount"), -1.0, delta * 0.8))
+		strafe_dir = Vector3.ZERO
 	
 	velocity.x = move_direction.x * speed
 	velocity.z = move_direction.z * speed
-	#velocity.y -= gravity * delta
 
 	
 	#add the gravity
@@ -74,6 +95,8 @@ func _physics_process(delta: float) -> void:
 	
 	enemies_in_range_label.text = EIR_names
 	
+	strafe = lerp(strafe, strafe_dir, 0.05)
+	$AnimationTree.set("parameters/strafe/blend_position", Vector2(-strafe.x, strafe.z))
 	
 	
 	# collision checks
