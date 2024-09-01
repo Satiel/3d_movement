@@ -6,7 +6,7 @@ extends CharacterBody3D
 
 
 
-@export var speed := 3.5
+@export var speed := 2.0
 @export var jump_strength := 20.0
 @export var gravity := 50.0
 
@@ -85,9 +85,9 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_strength	
 
-	#var look_direction = Vector2(velocity.z, velocity.x)
-	#if look_direction.length() > 0.2:
-		#rotation.y = look_direction.angle()
+	var look_direction = Vector2(velocity.z, velocity.x)
+	if look_direction.length() > 0.2:
+		rotation.y = look_direction.angle()
 		
 	move_and_slide()
 	

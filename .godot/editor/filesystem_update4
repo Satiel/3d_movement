@@ -1,6 +1,7 @@
-res://World.tscn
+res://red_character.tscn
 res://materials/grid.tres
 res://materials/player.tres
+res://World.tscn
 res://player.tscn
 res://player_2.tscn
 res://skeleton_warrior.tscn
@@ -8,11 +9,3 @@ res://box.tscn
 res://World_backup.tscn
 res://character_imported_from_blender.tscn
 res://player.gd
-res://Animations/Walk_Backwards_Left.res
-res://red_character.tscn
-res://Animations2/red_animations_library.res
-res://Animations2/Idle.res
-res://Animations2/Walking_Backward.res
-res://Animations2/Walking_Forward.res
-res://Animations2/Walking_Left.res
-res://Animations2/Walking_Right.res
