@@ -99,7 +99,7 @@ func _physics_process(delta: float) -> void:
 	enemies_in_range_label.text = EIR_names
 	#
 	strafe = lerp(strafe, strafe_dir, 0.05)
-	$AnimationTree.set("parameters/strafe/blend_position", Vector2(-strafe.x, strafe.z))
+	$AnimationTree.set("parameters/strafe/blend_position", Vector2(strafe.x, -strafe.z))
 	
 	
 	# collision checks
