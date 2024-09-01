@@ -1,11 +1,12 @@
+Camera3D
+SpringArm3D
+CollisionShape3D
+AnimationPlayer
+CharacterBody3D
+Node3D
 MeshInstance3D
 Label3D
 Label
 Control
-Node3D
-CollisionShape3D
 Area3D
-Camera3D
-SpringArm3D
-CharacterBody3D
 WorldEnvironment

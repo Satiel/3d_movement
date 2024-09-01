@@ -13,21 +13,29 @@ extends CharacterBody3D
 #var velocity := Vector3.ZERO
 var _snap_vector:= Vector3.DOWN
 
+#@onready var spring_arm_3d = $SpringArm3D
+#@onready var spring_arm_3d = $Player/SpringArm3D
+#@onready var spring_arm_3d = $"/root/World/SpringArm3D2"
 @onready var spring_arm_3d = $SpringArm3D
+
+
 @onready var mesh_instance_3d = $CollisionShape3D/MeshInstance3D
 
-@onready var enemies_container = $"../Enemies"
+#@onready var enemies_container = $"../Enemies"
+@onready var enemies_container = $"/root/World".get_node("Enemies")
 @onready var enemies : Array
 @onready var enemy_names: Array
 
-@onready var allies_container = $"../Allies"
+#@onready var allies_container = $"../Allies"
+@onready var allies_container = $"/root/World".get_node("Allies")
 @onready var allies: Array 
 @onready var ally_names: Array
 
 @onready var enemies_in_range : Array
 @onready var allies_in_range: Array
 
-@onready var enemies_in_range_label = $"../Enemies_in_range_label"
+#@onready var enemies_in_range_label = $"../Enemies_in_range_label"
+@onready var enemies_in_range_label = $"/root/World/Enemies_in_range_label"
 
 
 

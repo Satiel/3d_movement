@@ -1,8 +1,13 @@
-res://World.tscn
+res://Animations/Idle.res
+res://player.tscn
 res://materials/grid.tres
 res://materials/player.tres
-res://player.tscn
+res://player_2.tscn
+res://World.tscn
 res://skeleton_warrior.tscn
 res://box.tscn
+res://player_3.tscn
 res://player.gd
-res://SpringArm3D.gd
+res://Animations/animation_library.res
+res://World_backup.tscn
+res://character_imported_from_blender.tscn

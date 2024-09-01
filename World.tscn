@@ -3,10 +3,12 @@
 [ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://materials/grid.tres" id="1_a577l"]
 [ext_resource type="Script" path="res://World.gd" id="1_m3ber"]
 [ext_resource type="Texture2D" uid="uid://b1jvh1ehiaebt" path="res://textures/industrial_sunset_puresky_4k.hdr" id="2_2cry1"]
-[ext_resource type="PackedScene" uid="uid://cpu3jwmmxsmx1" path="res://player.tscn" id="3_ldapy"]
 [ext_resource type="Texture2D" uid="uid://ivvpsi314b34" path="res://textures/grid.jpg" id="4_5oqei"]
 [ext_resource type="PackedScene" uid="uid://dc08vcyt1usbf" path="res://box.tscn" id="5_n3ly4"]
 [ext_resource type="PackedScene" uid="uid://c4e8oxy821wlr" path="res://skeleton_warrior.tscn" id="5_yv5kp"]
+[ext_resource type="PackedScene" uid="uid://qcyojdatcgxe" path="res://character_imported_from_blender.tscn" id="7_xqbrb"]
+[ext_resource type="Script" path="res://player.gd" id="8_tdka1"]
+[ext_resource type="Script" path="res://SpringArm3D.gd" id="9_lb7k1"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_twjed"]
 panorama = ExtResource("2_2cry1")
@@ -103,11 +105,7 @@ shader_parameter/texture_roughness = ExtResource("4_5oqei")
 [sub_resource type="BoxMesh" id="BoxMesh_rgy4o"]
 material = SubResource("ShaderMaterial_t8k35")
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_hpily"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_0iixa"]
-
-[node name="Node3D" type="Node3D"]
+[node name="World" type="Node3D"]
 script = ExtResource("1_m3ber")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -135,25 +133,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.774532, 0)
 mesh = SubResource("BoxMesh_rgy4o")
 skeleton = NodePath("../../Enemies")
 
-[node name="Player" parent="." instance=ExtResource("3_ldapy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.652, 1.2876, 32.6432)
-
-[node name="Area3D" type="Area3D" parent="Player"]
-transform = Transform3D(12.18, 0, 0, 0, 12.18, 0, 0, 0, 12.18, 0, 0, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Area3D"]
-transform = Transform3D(6.03, 0, 0, 0, 6.03, 0, 0, 0, 6.03, 0, 0, 0)
-shape = SubResource("SphereShape3D_hpily")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Area3D/CollisionShape3D"]
-visible = false
-mesh = SubResource("SphereMesh_0iixa")
-
 [node name="Skeleton_Warrior" parent="." instance=ExtResource("5_yv5kp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 5)
 
 [node name="Enemies_in_range_label" type="Label3D" parent="."]
 transform = Transform3D(8.315, 0, 0, 0, 8.315, 0, 0, 0, 8.315, -5.19457, 3.55112, -10.5572)
 
-[connection signal="body_entered" from="Player/Area3D" to="Player" method="_on_area_3d_body_entered"]
-[connection signal="body_exited" from="Player/Area3D" to="Player" method="_on_area_3d_body_exited"]
+[node name="character_1" parent="." instance=ExtResource("7_xqbrb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8442, 0.25, -6.14911)
+script = ExtResource("8_tdka1")
+
+[node name="SpringArm3D" parent="character_1" index="3"]
+script = ExtResource("9_lb7k1")
+
+[editable path="character_1"]
