@@ -6,7 +6,7 @@ extends CharacterBody3D
 
 
 
-@export var speed := 7.0
+@export var speed := 3.5
 @export var jump_strength := 20.0
 @export var gravity := 50.0
 
@@ -40,17 +40,20 @@ var _snap_vector:= Vector3.DOWN
 var strafe_dir = Vector3.ZERO
 var strafe = Vector3.ZERO
 
-
+var is_sprinting : bool = false
 
 
 func _physics_process(delta: float) -> void:
 	var move_direction := Vector3.ZERO
 	
-	if Input.is_action_pressed("aim"):
-		$AnimationTree.set("parameters/aim_transition/transition_request", "aiming")
-	else:
-		$AnimationTree.set("parameters/aim_transition/transition_request", "not_aiming")
+	#if Input.is_action_pressed("aim"):
+		#$AnimationTree.set("parameters/aim_transition/transition_request", "aiming")
+	#else:
+		#$AnimationTree.set("parameters/aim_transition/transition_request", "not_aiming")
 
+	if Input.is_action_just_pressed("sprint"):
+		is_sprinting = !is_sprinting
+	
 	if Input.is_action_pressed("right") || Input.is_action_pressed("left") || Input.is_action_pressed("forward") || Input.is_action_pressed("back"):
 		move_direction.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 		move_direction.z = Input.get_action_strength("back") - Input.get_action_strength("forward")
@@ -60,15 +63,15 @@ func _physics_process(delta: float) -> void:
 		strafe_dir = move_direction
 		move_direction = move_direction.rotated(Vector3.UP, spring_arm_3d.rotation.y).normalized()
 			
-		if Input.is_action_pressed("sprint") && $AnimationTree.get("parameters/aim_transition/current_state") == "not_aiming":
-			$AnimationTree.set("parameters/Iwr_blend/blend_amount", lerp($AnimationTree.get("parameters/Iwr_blend/blend_amount"), 1.0, delta * 0.8))
-		else: 
-			$AnimationTree.set("parameters/Iwr_blend/blend_amount", lerp($AnimationTree.get("parameters/Iwr_blend/blend_amount"), 0.0, delta * 0.8))
+		#if is_sprinting == true && $AnimationTree.get("parameters/aim_transition/current_state") == "not_aiming":
+			#$AnimationTree.set("parameters/Iwr_blend/blend_amount", lerp($AnimationTree.get("parameters/Iwr_blend/blend_amount"), 1.0, delta * 0.8))
+		#else: 
+			#$AnimationTree.set("parameters/Iwr_blend/blend_amount", lerp($AnimationTree.get("parameters/Iwr_blend/blend_amount"), 0.0, delta * 0.8))
 		
 
 	#velocity.y -= gravity * delta
 	else:
-		$AnimationTree.set("parameters/Iwr_blend/blend_amount", lerp($AnimationTree.get("parameters/Iwr_blend/blend_amount"), -1.0, delta * 0.8))
+		#$AnimationTree.set("parameters/Iwr_blend/blend_amount", lerp($AnimationTree.get("parameters/Iwr_blend/blend_amount"), -1.0, delta * 0.8))
 		strafe_dir = Vector3.ZERO
 	
 	velocity.x = move_direction.x * speed
@@ -82,9 +85,9 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_strength	
 
-	var look_direction = Vector2(velocity.z, velocity.x)
-	if look_direction.length() > 0.2:
-		rotation.y = look_direction.angle()
+	#var look_direction = Vector2(velocity.z, velocity.x)
+	#if look_direction.length() > 0.2:
+		#rotation.y = look_direction.angle()
 		
 	move_and_slide()
 	
@@ -94,7 +97,7 @@ func _physics_process(delta: float) -> void:
 		EIR_names += "\n"
 	
 	enemies_in_range_label.text = EIR_names
-	
+	#
 	strafe = lerp(strafe, strafe_dir, 0.05)
 	$AnimationTree.set("parameters/strafe/blend_position", Vector2(-strafe.x, strafe.z))
 	
