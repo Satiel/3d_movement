@@ -10,3 +10,12 @@ res://character_imported_from_blender.tscn
 res://red_character.tscn
 res://player.gd
 res://SpringArm3D.gd
+res://Animations2/Walking_Left.res
+res://Animations2/red_animations_library.res
+res://red_take_2.tscn
+res://Animations3/red_take_2_library.res
+res://Animations3/Idle.res
+res://Animations3/Walking_Backward.res
+res://Animations3/Walking_Forward.res
+res://Animations3/Walking_Left.res
+res://Animations3/Walking_Right.res

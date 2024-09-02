@@ -1,7 +1,7 @@
-Camera3D
-SpringArm3D
 AnimationTree
 AnimationPlayer
+Camera3D
+SpringArm3D
 CollisionShape3D
 CharacterBody3D
 Area3D
