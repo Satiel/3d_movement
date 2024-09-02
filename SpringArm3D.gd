@@ -112,7 +112,7 @@ func _physics_process(delta: float) -> void:
 			
 		
 			rotation.y = lerp(rotation.y, desired_rotation_y, 0.8)
-			rotation.x = lerp(rotation.x, desired_rotation_x, 0.05)
+			#rotation.x = lerp(rotation.x, desired_rotation_x, 0.05)
 
 	if (locked_on == false) and (enemy_target_lock != null):
 		enemy_target_lock.visible = false

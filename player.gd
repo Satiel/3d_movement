@@ -101,6 +101,7 @@ func _physics_process(delta: float) -> void:
 
 	elif is_locked_on == true:
 		var look_direction = spring_arm_3d.global_transform.basis.z
+		look_direction.y = 0
 		look_at(global_transform.origin + look_direction, Vector3.UP)
 		
 
