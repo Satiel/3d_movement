@@ -39,8 +39,10 @@ var _snap_vector:= Vector3.DOWN
 
 var strafe_dir = Vector3.ZERO
 var strafe = Vector3.ZERO
+var _is_jumping : bool = false
 
 var is_sprinting : bool = false
+var is_locked_on : bool
 
 
 func _physics_process(delta: float) -> void:
@@ -50,6 +52,8 @@ func _physics_process(delta: float) -> void:
 		#$AnimationTree.set("parameters/aim_transition/transition_request", "aiming")
 	#else:
 		#$AnimationTree.set("parameters/aim_transition/transition_request", "not_aiming")
+		
+	
 
 	if Input.is_action_just_pressed("sprint"):
 		is_sprinting = !is_sprinting
@@ -81,13 +85,25 @@ func _physics_process(delta: float) -> void:
 	#add the gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
+	else:
+		_is_jumping = false
 		
 	if Input.is_action_just_pressed("jump") and is_on_floor():
+		_is_jumping = true
 		velocity.y = jump_strength	
 
-	var look_direction = Vector2(velocity.z, velocity.x)
-	if look_direction.length() > 0.2:
-		rotation.y = look_direction.angle()
+	is_locked_on = spring_arm_3d.get("locked_on")
+
+	if is_locked_on == false:
+		var look_direction = Vector2(velocity.z, velocity.x)
+		if look_direction.length() > 0.2:
+			rotation.y = look_direction.angle()
+
+	elif is_locked_on == true:
+		var look_direction = spring_arm_3d.global_transform.basis.z
+		look_at(global_transform.origin + look_direction, Vector3.UP)
+		
+
 		
 	move_and_slide()
 	
@@ -97,9 +113,13 @@ func _physics_process(delta: float) -> void:
 		EIR_names += "\n"
 	
 	enemies_in_range_label.text = EIR_names
-	#
-	strafe = lerp(strafe, strafe_dir, 0.05)
-	$AnimationTree.set("parameters/strafe/blend_position", Vector2(strafe.x, -strafe.z))
+
+	if is_locked_on == false:
+		strafe = lerp(strafe, strafe_dir, 0.05)
+		$AnimationTree.set("parameters/strafe/blend_position", Vector2(strafe.x, -strafe.z))
+	elif is_locked_on == true:
+		strafe = lerp(strafe, strafe_dir, 0.05)
+		$AnimationTree.set("parameters/locked_on_strafe/blend_position", Vector2(strafe.x, -strafe.z))
 	
 	
 	# collision checks
@@ -133,6 +153,9 @@ func _ready():
 	allies = allies_container.get_children()
 	for ally in allies:
 		ally_names.append(ally.name)
+		
+	if spring_arm_3d:
+		is_locked_on = spring_arm_3d.get("locked_on")
 
 func _on_area_3d_body_entered(body):
 

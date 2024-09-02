@@ -13,6 +13,9 @@ var enemies : Array
 var locked_on : bool 
 var enemy_target_lock: Node3D
 
+
+
+
 func _ready():
 	set_as_top_level(true)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -55,9 +58,22 @@ func _physics_process(delta: float) -> void:
 	
 	
 	if Input.is_action_just_pressed("lock_on"):
-		locked_on = not locked_on
+		locked_on = !locked_on
 		print("Locked_on changed to ", locked_on)
 	enemies = get_tree().get_nodes_in_group("EnemiesInRange")
+	
+	#if Input.is_action_pressed("aim"):
+		#$AnimationTree.set("parameters/aim_transition/transition_request", "aiming")
+	#else:
+		#$AnimationTree.set("parameters/aim_transition/transition_request", "not_aiming")
+		
+	if locked_on == true:
+		if get_parent().get_node("AnimationTree"):
+			get_parent().get_node("AnimationTree").set("parameters/lock_on_transition/transition_request", "locked_on")
+
+	elif locked_on == false:
+		if get_parent().get_node("AnimationTree"):
+			get_parent().get_node("AnimationTree").set("parameters/lock_on_transition/transition_request", "not_locked_on")
 
 	
 	if enemies.size() > 0:
