@@ -34,7 +34,7 @@ func _ready():
 		
 func _physics_process(delta: float) -> void:
 	# continously check the joystick axis values
-	joystick_direction.x = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)
+	joystick_direction.x = -(Input.get_joy_axis(0, JOY_AXIS_RIGHT_X))
 	joystick_direction.y = Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
 	
 	#print("x: ", joystick_direction.x, ", y: ", joystick_direction.y)
@@ -95,7 +95,7 @@ func _physics_process(delta: float) -> void:
 			var _target_look = atan2(_looking_direction.x, _looking_direction.z)
 			print("Looking direction: ", _target_look)
 
-			# turn the springarm3D slowly
+			# turn the springarm3D slowly, from it's current rotation (rotation.y) to the enemy's location (_target_look)
 			var desired_rotation_y = lerp_angle(rotation.y, _target_look, 0.05)
 			print("desired_rotation_y: ", desired_rotation_y)
 			
@@ -105,12 +105,15 @@ func _physics_process(delta: float) -> void:
 			normalized_distance = smoothstep(0.0, 1.0, normalized_distance)
 			print("normalized distance: ", normalized_distance)
 			
-			# how much do we look up and down
+			# how much do we look up and down when the player moves the joystick up and down, between 45 and 15 degrees
+			# The vertical rotation (angle) is interpolated based on the distance to the enemy (normalized_distancee, between 0 and 1). 
+			# When far away, the camera will have a higher angle (45 degrees), and when closer, the angle lowers (15 degrees).
 			var angle = lerp(45.0, 15.0, normalized_distance)
 			var desired_rotation_x = deg_to_rad(-angle)
 			print("angle: ", angle, ", desired_rotation_x: ", desired_rotation_x)
 			
 		
+			# adjust the actual Y-axis rotation of the SpringArm3D, smoothly towards desired_rotation_y
 			rotation.y = lerp(rotation.y, desired_rotation_y, 0.8)
 			#rotation.x = lerp(rotation.x, desired_rotation_x, 0.05)
 
